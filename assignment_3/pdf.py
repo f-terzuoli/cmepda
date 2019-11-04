@@ -15,8 +15,8 @@ class ProbabilityDensityFunction(InterpolatedUnivariateSpline):
         InterpolatedUnivariateSpline.__init__(self, x, y)
         ycdf = np.array([self.integral(x[0], xcdf) for xcdf in x])
         self.cdf = InterpolatedUnivariateSpline(x, ycdf)
-        #Need to make sure that the vector I am passingto the ppf spline as
-        #the x values has no duplicates---and need to filter the y accordingly.
+        """Need to make sure that the vector I am passingto the ppf spline as
+        the x values has no duplicates---and need to filter the y accordingly."""
         xppf, ippf = np.unique(ycdf, return_index=True)
         yppf = x[ippf]
 
@@ -33,7 +33,7 @@ class ProbabilityDensityFunction(InterpolatedUnivariateSpline):
         """
         return self.ppf(np.random.uniform(size=size))
 
-    
+
 
 def test_gauss(mu=0., sigma=1., support=10., num_points=500):
     '''Unit test with a gaussian distribution
@@ -56,14 +56,14 @@ def test_gauss(mu=0., sigma=1., support=10., num_points=500):
     plt.ylabel('ppf(q)')
 
     plt.figure('Sampling')
-    rnd = pdf.rnd(1000000000)
+    rnd = pdf.rnd(10000000)
     ydata, edges, _ = plt.hist(rnd, bins=200)
     xdata = 0.5 * (edges[1:] + edges [:-1])
     print(ydata.shape, edges.shape, xdata.shape)
 
     def f(x, C, mu, sigma):
         return C * norm.pdf(x, mu, sigma)
-    
+
     popt, pcov = curve_fit(f, xdata, ydata)
     print(popt)
     print(np.sqrt(pcov.diagonal()))

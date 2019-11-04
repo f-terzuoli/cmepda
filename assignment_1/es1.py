@@ -16,7 +16,7 @@ def process(file_path):
 
     #Start timer
     start_time = time.time()
-    
+
     #Basic sanity cheks
     assert file_path.endswith('.txt')
     assert os.path.isfile(file_path)
@@ -44,14 +44,13 @@ def process(file_path):
     #Normalize the occurences.
     for ch in letters:
         frequency_dict[ch] = frequency_dict[ch]/num_characters
-            
+
     # We're done---print the glorious output. (And here it is appropriate to
     # use print() instead of logging.)
     for ch, freq in frequency_dict.items():
         print('{}: {:.3f}%'.format(ch, freq * 100.))
 
     if args.plot:
-        matplotlib.use( 'Qt5Agg' )
         plt.bar(*zip(*frequency_dict.items()))
 
     #if args.stats:
@@ -66,7 +65,7 @@ def process(file_path):
     if args.plot:
         #plt.ion()
         plt.show()
-    
+
 #Se questo script e il programma principale (main) definisco le opzioni di lunch
 #altrimenti se la devo importare come funzione
 #non voglio che abbia le opzioni
